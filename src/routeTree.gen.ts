@@ -14,8 +14,15 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedLibraryRouteImport } from './routes/_authenticated/library'
+import { Route as AuthenticatedOnboardingRouteImport } from './routes/_authenticated/onboarding'
+import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedSearchRouteImport } from './routes/_authenticated/search'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
 import { Route as AuthenticatedArticlesSlugRouteImport } from './routes/_authenticated/articles.$slug'
+import { Route as AuthenticatedWorkflowsIndexRouteImport } from './routes/_authenticated/workflows.index'
+import { Route as AuthenticatedWorkflowsSlugRouteImport } from './routes/_authenticated/workflows.$slug'
+import { Route as AuthenticatedAdminArticlesSlugRouteImport } from './routes/_authenticated/admin.articles.$slug'
+import { Route as AuthenticatedAdminWorkflowsSlugRouteImport } from './routes/_authenticated/admin.workflows.$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -41,9 +48,24 @@ const AuthenticatedLibraryRoute = AuthenticatedLibraryRouteImport.update({
   path: '/library',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedOnboardingRoute = AuthenticatedOnboardingRouteImport.update({
+  id: '/onboarding',
+  path: '/onboarding',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedSearchRoute = AuthenticatedSearchRouteImport.update({
   id: '/search',
   path: '/search',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/admin/',
+  path: '/admin/',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedArticlesSlugRoute =
@@ -52,22 +74,60 @@ const AuthenticatedArticlesSlugRoute =
     path: '/articles/$slug',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedWorkflowsIndexRoute =
+  AuthenticatedWorkflowsIndexRouteImport.update({
+    id: '/workflows/',
+    path: '/workflows/',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedWorkflowsSlugRoute =
+  AuthenticatedWorkflowsSlugRouteImport.update({
+    id: '/workflows/$slug',
+    path: '/workflows/$slug',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminArticlesSlugRoute =
+  AuthenticatedAdminArticlesSlugRouteImport.update({
+    id: '/admin/articles/$slug',
+    path: '/admin/articles/$slug',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedAdminWorkflowsSlugRoute =
+  AuthenticatedAdminWorkflowsSlugRouteImport.update({
+    id: '/admin/workflows/$slug',
+    path: '/admin/workflows/$slug',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/library': typeof AuthenticatedLibraryRoute
+  '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/profile': typeof AuthenticatedProfileRoute
   '/search': typeof AuthenticatedSearchRoute
   '/articles/$slug': typeof AuthenticatedArticlesSlugRoute
+  '/workflows/$slug': typeof AuthenticatedWorkflowsSlugRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
+  '/workflows/': typeof AuthenticatedWorkflowsIndexRoute
+  '/admin/articles/$slug': typeof AuthenticatedAdminArticlesSlugRoute
+  '/admin/workflows/$slug': typeof AuthenticatedAdminWorkflowsSlugRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/library': typeof AuthenticatedLibraryRoute
+  '/onboarding': typeof AuthenticatedOnboardingRoute
+  '/profile': typeof AuthenticatedProfileRoute
   '/search': typeof AuthenticatedSearchRoute
   '/articles/$slug': typeof AuthenticatedArticlesSlugRoute
+  '/workflows/$slug': typeof AuthenticatedWorkflowsSlugRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
+  '/workflows': typeof AuthenticatedWorkflowsIndexRoute
+  '/admin/articles/$slug': typeof AuthenticatedAdminArticlesSlugRoute
+  '/admin/workflows/$slug': typeof AuthenticatedAdminWorkflowsSlugRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -76,8 +136,15 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/library': typeof AuthenticatedLibraryRoute
+  '/_authenticated/onboarding': typeof AuthenticatedOnboardingRoute
+  '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/search': typeof AuthenticatedSearchRoute
   '/_authenticated/articles/$slug': typeof AuthenticatedArticlesSlugRoute
+  '/_authenticated/workflows/$slug': typeof AuthenticatedWorkflowsSlugRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
+  '/_authenticated/workflows/': typeof AuthenticatedWorkflowsIndexRoute
+  '/_authenticated/admin/articles/$slug': typeof AuthenticatedAdminArticlesSlugRoute
+  '/_authenticated/admin/workflows/$slug': typeof AuthenticatedAdminWorkflowsSlugRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -86,16 +153,30 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/library'
+    | '/onboarding'
+    | '/profile'
     | '/search'
     | '/articles/$slug'
+    | '/workflows/$slug'
+    | '/admin/'
+    | '/workflows/'
+    | '/admin/articles/$slug'
+    | '/admin/workflows/$slug'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/auth'
     | '/reset-password'
     | '/library'
+    | '/onboarding'
+    | '/profile'
     | '/search'
     | '/articles/$slug'
+    | '/workflows/$slug'
+    | '/admin'
+    | '/workflows'
+    | '/admin/articles/$slug'
+    | '/admin/workflows/$slug'
   id:
     | '__root__'
     | '/'
@@ -103,8 +184,15 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/_authenticated/library'
+    | '/_authenticated/onboarding'
+    | '/_authenticated/profile'
     | '/_authenticated/search'
     | '/_authenticated/articles/$slug'
+    | '/_authenticated/workflows/$slug'
+    | '/_authenticated/admin/'
+    | '/_authenticated/workflows/'
+    | '/_authenticated/admin/articles/$slug'
+    | '/_authenticated/admin/workflows/$slug'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -151,11 +239,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedLibraryRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/onboarding': {
+      id: '/_authenticated/onboarding'
+      path: '/onboarding'
+      fullPath: '/onboarding'
+      preLoaderRoute: typeof AuthenticatedOnboardingRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/profile': {
+      id: '/_authenticated/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof AuthenticatedProfileRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/search': {
       id: '/_authenticated/search'
       path: '/search'
       fullPath: '/search'
       preLoaderRoute: typeof AuthenticatedSearchRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/admin'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/articles/$slug': {
@@ -165,19 +274,61 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedArticlesSlugRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/workflows/': {
+      id: '/_authenticated/workflows/'
+      path: '/workflows'
+      fullPath: '/workflows/'
+      preLoaderRoute: typeof AuthenticatedWorkflowsIndexRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/workflows/$slug': {
+      id: '/_authenticated/workflows/$slug'
+      path: '/workflows/$slug'
+      fullPath: '/workflows/$slug'
+      preLoaderRoute: typeof AuthenticatedWorkflowsSlugRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/articles/$slug': {
+      id: '/_authenticated/admin/articles/$slug'
+      path: '/admin/articles/$slug'
+      fullPath: '/admin/articles/$slug'
+      preLoaderRoute: typeof AuthenticatedAdminArticlesSlugRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/workflows/$slug': {
+      id: '/_authenticated/admin/workflows/$slug'
+      path: '/admin/workflows/$slug'
+      fullPath: '/admin/workflows/$slug'
+      preLoaderRoute: typeof AuthenticatedAdminWorkflowsSlugRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedLibraryRoute: typeof AuthenticatedLibraryRoute
+  AuthenticatedOnboardingRoute: typeof AuthenticatedOnboardingRoute
+  AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
   AuthenticatedSearchRoute: typeof AuthenticatedSearchRoute
   AuthenticatedArticlesSlugRoute: typeof AuthenticatedArticlesSlugRoute
+  AuthenticatedWorkflowsSlugRoute: typeof AuthenticatedWorkflowsSlugRoute
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+  AuthenticatedWorkflowsIndexRoute: typeof AuthenticatedWorkflowsIndexRoute
+  AuthenticatedAdminArticlesSlugRoute: typeof AuthenticatedAdminArticlesSlugRoute
+  AuthenticatedAdminWorkflowsSlugRoute: typeof AuthenticatedAdminWorkflowsSlugRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedLibraryRoute: AuthenticatedLibraryRoute,
+  AuthenticatedOnboardingRoute: AuthenticatedOnboardingRoute,
+  AuthenticatedProfileRoute: AuthenticatedProfileRoute,
   AuthenticatedSearchRoute: AuthenticatedSearchRoute,
   AuthenticatedArticlesSlugRoute: AuthenticatedArticlesSlugRoute,
+  AuthenticatedWorkflowsSlugRoute: AuthenticatedWorkflowsSlugRoute,
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+  AuthenticatedWorkflowsIndexRoute: AuthenticatedWorkflowsIndexRoute,
+  AuthenticatedAdminArticlesSlugRoute: AuthenticatedAdminArticlesSlugRoute,
+  AuthenticatedAdminWorkflowsSlugRoute: AuthenticatedAdminWorkflowsSlugRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
