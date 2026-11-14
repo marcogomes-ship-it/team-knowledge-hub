@@ -32,13 +32,13 @@ function EditArticle() {
   const set = (k: keyof typeof form) => (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setForm({ ...form, [k]: e.target.value });
 
   const save = async () => {
-    if (!form.title.trim()) return toast.error("Title is required");
+    if (!form.title.trim()) return void toast.error("Title is required");
     const row = { title: form.title, category: form.category, summary: form.summary, content: form.content,
       audience: form.audience.split(",").map((x) => x.trim()).filter(Boolean), source_url: form.source_url || null, updated_at: new Date().toISOString() };
     const res = isNew
       ? await supabase.from("articles").insert({ ...row, slug: slugify(form.title), source: "Internal" }).select("slug").single()
       : await supabase.from("articles").update(row).eq("slug", slug).select("slug").single();
-    if (res.error) return toast.error(res.error.message);
+    if (res.error) return void toast.error(res.error.message);
     toast.success("Saved");
     qc.invalidateQueries({ queryKey: ["articles"] });
     navigate({ to: "/articles/$slug", params: { slug: res.data.slug } });
@@ -46,7 +46,7 @@ function EditArticle() {
   const remove = async () => {
     if (!confirm("Delete this article?")) return;
     const { error } = await supabase.from("articles").delete().eq("slug", slug);
-    if (error) return toast.error(error.message);
+    if (error) return void toast.error(error.message);
     qc.invalidateQueries({ queryKey: ["articles"] });
     navigate({ to: "/admin" });
   };

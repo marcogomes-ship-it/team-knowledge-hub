@@ -28,7 +28,7 @@ function Profile() {
   const save = async (e: React.FormEvent) => {
     e.preventDefault();
     const { error } = await supabase.from("profiles").upsert({ id: me.user.id, full_name: name, team: team || null, start_date: start || null, updated_at: new Date().toISOString() });
-    if (error) return toast.error(error.message);
+    if (error) return void toast.error(error.message);
     toast.success("Profile saved");
     qc.invalidateQueries({ queryKey: ["me"] });
   };

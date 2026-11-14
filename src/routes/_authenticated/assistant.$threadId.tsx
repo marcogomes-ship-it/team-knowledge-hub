@@ -12,7 +12,7 @@ import { Shimmer } from "@/components/ai-elements/shimmer";
 import mark from "@/assets/hostify-mark.png";
 
 export const Route = createFileRoute("/_authenticated/assistant/$threadId")({
-  validateSearch: (s: Record<string, unknown>): { q?: string } => ({ q: typeof s.q === "string" ? s.q : undefined }),
+  validateSearch: (s: Record<string, unknown>): { q?: string | undefined } => ({ q: typeof s["q"] === "string" ? (s["q"] as string) : undefined }),
   component: ThreadPage,
 });
 

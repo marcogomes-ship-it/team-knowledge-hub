@@ -32,15 +32,15 @@ function EditWorkflow() {
     if (w) { setTitle(w.title); setSummary(w.summary); setCategory(w.category); setSteps(w.steps as Step[]); }
   }, [w]);
   const upd = (i: number, k: keyof Step, v: string) => setSteps(steps.map((s, j) => (j === i ? { ...s, [k]: v } : s)));
-  const move = (i: number, d: number) => { const n = [...steps]; const [x] = n.splice(i, 1); n.splice(i + d, 0, x); setSteps(n); };
+  const move = (i: number, d: number) => { const n = [...steps]; const [x] = n.splice(i, 1); n.splice(i + d, 0, x!); setSteps(n); };
 
   const save = async () => {
-    if (!title.trim()) return toast.error("Title is required");
+    if (!title.trim()) return void toast.error("Title is required");
     const row = { title, summary, category, steps: steps.filter((s) => s.title.trim()), updated_at: new Date().toISOString() };
     const res = isNew
       ? await supabase.from("workflows").insert({ ...row, slug: slugify(title) }).select("slug").single()
       : await supabase.from("workflows").update(row).eq("slug", slug).select("slug").single();
-    if (res.error) return toast.error(res.error.message);
+    if (res.error) return void toast.error(res.error.message);
     toast.success("Saved");
     qc.invalidateQueries({ queryKey: ["workflows"] });
     navigate({ to: "/workflows/$slug", params: { slug: res.data.slug } });
@@ -48,7 +48,7 @@ function EditWorkflow() {
   const remove = async () => {
     if (!confirm("Delete this workflow?")) return;
     const { error } = await supabase.from("workflows").delete().eq("slug", slug);
-    if (error) return toast.error(error.message);
+    if (error) return void toast.error(error.message);
     qc.invalidateQueries({ queryKey: ["workflows"] });
     navigate({ to: "/admin" });
   };

@@ -7,10 +7,10 @@ import { useMe } from "@/lib/me";
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 
-type Search = { category?: string };
+type Search = { category?: string | undefined };
 
 export const Route = createFileRoute("/_authenticated/library")({
-  validateSearch: (s: Record<string, unknown>): Search => ({ category: typeof s.category === "string" ? s.category : undefined }),
+  validateSearch: (s: Record<string, unknown>): Search => ({ category: typeof s["category"] === "string" ? (s["category"] as string) : undefined }),
   head: () => ({ meta: [{ title: "Library — Hostify" }, { name: "description", content: "Browse every Hostify guide by topic." }] }),
   component: Library,
 });

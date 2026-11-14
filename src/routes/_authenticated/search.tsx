@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { SourceIcon } from "./library";
 
 export const Route = createFileRoute("/_authenticated/search")({
-  validateSearch: (s: Record<string, unknown>): { q: string } => ({ q: typeof s.q === "string" ? s.q : "" }),
+  validateSearch: (s: Record<string, unknown>): { q: string } => ({ q: typeof s["q"] === "string" ? (s["q"] as string) : "" }),
   head: () => ({ meta: [{ title: "Search — Hostify Library" }, { name: "description", content: "Search Hostify articles and workflows." }] }),
   component: SearchPage,
 });

@@ -24,7 +24,7 @@ function AssistantLayout() {
   };
   const remove = async (id: string) => {
     const { error } = await supabase.from("chat_threads").delete().eq("id", id);
-    if (error) return toast.error(error.message);
+    if (error) return void toast.error(error.message);
     await qc.invalidateQueries({ queryKey: ["threads"] });
     navigate({ to: "/assistant" });
   };

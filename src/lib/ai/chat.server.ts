@@ -47,7 +47,7 @@ export async function handleChat(request: Request) {
   const apiKey = process.env["LOVABLE_API_KEY"];
   if (!apiKey) return json(500, "The assistant isn't configured yet.");
 
-  const last = messages[messages.length - 1];
+  const last = messages[messages.length - 1]!;
   const question = textOf(last);
   if (last.role === "user") {
     const { error } = await supabase.from("chat_messages").upsert(
