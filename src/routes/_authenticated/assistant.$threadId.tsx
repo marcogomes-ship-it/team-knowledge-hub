@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport, type UIMessage } from "ai";
@@ -33,7 +33,6 @@ function ThreadPage() {
 
 function ChatWindow({ threadId, initial }: { threadId: string; initial: UIMessage[] }) {
   const { q } = Route.useSearch();
-  const navigate = useNavigate();
   const qc = useQueryClient();
   const sentQ = useRef(false);
   const transport = useMemo(() => new DefaultChatTransport({
@@ -59,10 +58,14 @@ function ChatWindow({ threadId, initial }: { threadId: string; initial: UIMessag
   useEffect(() => {
     if (q && !sentQ.current && initial.length === 0) {
       sentQ.current = true;
-      sendMessage({ text: q });
-      navigate({ to: "/assistant/$threadId", params: { threadId }, search: { q: undefined }, replace: true });
+      const t = setTimeout(() => {
+        sendMessage({ text: q });
+        window.history.replaceState(window.history.state, "", `/assistant/${threadId}`);
+      }, 50);
+      return () => { clearTimeout(t); sentQ.current = false; };
     }
-  }, [q, initial.length, sendMessage, navigate, threadId]);
+    return undefined;
+  }, [q, initial.length, sendMessage, threadId]);
 
   const busy = status === "submitted" || status === "streaming";
   const lastIsUser = messages[messages.length - 1]?.role === "user";
